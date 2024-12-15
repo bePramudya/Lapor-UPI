@@ -22,7 +22,7 @@ mongoose.connect(DB).then(() => {
 
 mongoose.set('strictQuery', true);
 
-const port = process.env.port || 3000;
+const port = process.env.PORT || 8080;
 
 const server = app.listen(port, () => {
   console.log(`app running on port ${port}...`);
