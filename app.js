@@ -15,6 +15,7 @@ const postRouter = require('./routes/postRoutes');
 const userRouter = require('./routes/userRoutes');
 const viewRouter = require('./routes/viewRoutes');
 
+// Start express app
 const app = express();
 
 app.set('view engine', 'pug');
