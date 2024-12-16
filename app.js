@@ -24,7 +24,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 // 1) GLOBAL MIDDLEWARES
 app.use(cookieParser());
-app.use(cors({ credentials: true, origin: 'http://127.0.0.1:5500' }));
+app.use(cors({ credentials: true, origin: 'http://127.0.0.1:3000' }));
 
 // Serving static files
 app.use(express.static(path.join(__dirname, 'public')));
