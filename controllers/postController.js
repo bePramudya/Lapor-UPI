@@ -1,8 +1,6 @@
 const multer = require('multer');
 const sharp = require('sharp');
 
-const fs = require('fs');
-
 const AppError = require('../utils/appError');
 const Post = require('../models/postModel');
 const factory = require('./handlerFactory');
@@ -32,28 +30,23 @@ exports.uploadPostImages = upload.array('images', 3);
 exports.formatPostImages = async (req, res, next) => {
   try {
     if (!req.files) return next();
-
-    const post = await Post.findById(req.params.id);
-
-    const imagePath = post.images.map((img) => `public/img/tours/${img}`);
-    await Promise.all(
-      imagePath.map((img) => fs.promises.rm(img, { force: true })),
-    );
-
+    let promises = [];
     req.body.images = [];
 
-    await Promise.all(
-      req.files.map(async (file, i) => {
-        const filename = `tour-${req.params.id}-${Date.now()}-${i + 1}.jpeg`;
+    req.files.forEach((file, i) => {
+      const filename = `tour-${req.params.id}-${Date.now()}-${i + 1}.jpeg`;
 
-        await sharp(file.buffer)
+      promises.push(
+        sharp(file.buffer)
           .toFormat('jpeg')
           .jpeg({ quality: 90 })
-          .toFile(`public/img/posts/${filename}`);
+          .toFile(`public/img/posts/${filename}`),
+      );
 
-        req.body.images.push(filename);
-      }),
-    );
+      req.body.images.push(filename);
+    });
+
+    await Promise.all(promises);
 
     next();
   } catch (err) {

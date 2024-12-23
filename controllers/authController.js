@@ -17,6 +17,7 @@ const createSendToken = (user, statusCode, res) => {
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000,
     ),
     HttpOnly: true,
+    sameSite: 'None',
   };
 
   // remove password from output(response)
@@ -83,6 +84,7 @@ exports.logout = (req, res) => {
 
 exports.protect = async (req, res, next) => {
   try {
+    console.log(req.cookies);
     // 1) Getting token and check if it's there
     let token;
     if (
