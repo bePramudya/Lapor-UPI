@@ -29,7 +29,7 @@ const postSchema = mongoose.Schema({
       message: 'category is either sp, ks, env, or another',
     },
   },
-  Images: [String],
+  images: [String],
   createdAt: {
     type: Date,
     default: Date.now(),
