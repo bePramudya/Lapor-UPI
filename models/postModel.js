@@ -42,6 +42,10 @@ const postSchema = mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  anonim: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 // DOC MIDDLEWARE
