@@ -60,24 +60,45 @@ exports.createPost = factory.createOne(Post);
 exports.updatePost = factory.updateOne(Post);
 exports.deletePost = factory.deleteOne(Post);
 
+exports.getAllTimeStats = async (req, res, next) => {
+  try {
+    const post = await Post.aggregate([
+      {
+        $group: {
+          _id: 'All Time Stats',
+          totalPosts: { $sum: 1 },
+        },
+      },
+    ]);
+
+    res.status(200).json({
+      status: 'success',
+      data: { post },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 exports.getMonthlyPosts = async (req, res, next) => {
   try {
     const year = +req.params.year;
+    const month = +req.params.month;
 
-    const post = await Post.aggregate([
+    const totalPost = await Post.aggregate([
       {
         $match: {
           createdAt: {
-            $gte: new Date(`${year}-01-01`),
-            $lte: new Date(`${year}-12-31`),
+            $gte: new Date(`${year}-${month}-01`),
+            $lte: new Date(`${year}-${month}-31`),
           },
         },
       },
       {
         $group: {
-          _id: { $month: '$createdAt' },
+          _id: month,
           numOfPosts: { $sum: 1 },
-          posts: { $push: '$title' },
+          post: { $push: '$title' },
         },
       },
       {
@@ -88,10 +109,76 @@ exports.getMonthlyPosts = async (req, res, next) => {
       },
     ]);
 
+    const spStats = await Post.aggregate([
+      {
+        $match: {
+          category: { $eq: 'sp' },
+        },
+      },
+      {
+        $group: {
+          _id: '$category',
+          numOfPosts: { $sum: 1 },
+          posts: { $push: '$title' },
+        },
+      },
+    ]);
+
+    const ksStats = await Post.aggregate([
+      {
+        $match: {
+          category: { $eq: 'ks' },
+        },
+      },
+      {
+        $group: {
+          _id: '$category',
+          numOfPosts: { $sum: 1 },
+          posts: { $push: '$title' },
+        },
+      },
+    ]);
+
+    const envStats = await Post.aggregate([
+      {
+        $match: {
+          category: { $eq: 'env' },
+        },
+      },
+      {
+        $group: {
+          _id: '$category',
+          numOfPosts: { $sum: 1 },
+          posts: { $push: '$title' },
+        },
+      },
+    ]);
+
+    const otherStats = await Post.aggregate([
+      {
+        $match: {
+          category: { $eq: 'other' },
+        },
+      },
+      {
+        $group: {
+          _id: '$category',
+          numOfPosts: { $sum: 1 },
+          posts: { $push: '$title' },
+        },
+      },
+    ]);
+
     res.status(200).json({
       status: 'success',
       data: {
-        post,
+        totalPost,
+        postPerCategory: {
+          sp: spStats,
+          ks: ksStats,
+          env: envStats,
+          other: otherStats,
+        },
       },
     });
   } catch (err) {

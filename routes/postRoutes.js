@@ -6,7 +6,7 @@ const router = express.Router();
 
 // router.param('id', tourController.checkID);
 
-router.route('/monthly-stats/:year').get(postController.getMonthlyPosts);
+router.route('/monthly-stats/:year&:month').get(postController.getMonthlyPosts);
 
 router
   .route('/')
