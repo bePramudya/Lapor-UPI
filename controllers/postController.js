@@ -101,12 +101,6 @@ exports.getMonthlyPosts = async (req, res, next) => {
           post: { $push: '$title' },
         },
       },
-      {
-        $addFields: { month: '$_id' },
-      },
-      {
-        $sort: { numOfPosts: -1 },
-      },
     ]);
 
     const spStats = await Post.aggregate([
@@ -172,12 +166,12 @@ exports.getMonthlyPosts = async (req, res, next) => {
     res.status(200).json({
       status: 'success',
       data: {
-        totalPost,
+        totalPost: totalPost[0],
         postPerCategory: {
-          sp: spStats,
-          ks: ksStats,
-          env: envStats,
-          other: otherStats,
+          sp: spStats[0],
+          ks: ksStats[0],
+          env: envStats[0],
+          other: otherStats[0],
         },
       },
     });
