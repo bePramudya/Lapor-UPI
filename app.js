@@ -29,7 +29,11 @@ app.use(cors({ credentials: true, origin: 'http://127.0.0.1:3000' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Set Security HTTP headers
-app.use(helmet());
+app.use(
+  helmet({
+    crossOriginResourcePolicy: false,
+  }),
+);
 
 // Development logging
 if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
