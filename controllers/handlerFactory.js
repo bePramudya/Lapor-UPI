@@ -12,22 +12,20 @@ const uploadToBlob = async (req) => {
         access: 'public',
         token: process.env.BLOB_READ_WRITE_TOKEN,
         addRandomSuffix: false,
-      }).catch((error) => console.error('Error in put:', error)),
+      }).catch((error) => error),
     );
   });
 
   await Promise.all(promises);
 };
 
-const deleteInBlobWhenUpdate = async (req, Model) => {
+const deleteBlobWhenUpdate = async (req, Model) => {
   const post = await Model.findById(req.params.id);
-  console.log(post.images);
   if (post.images.length === 0) return;
 
   const promises = [];
 
   post.images.forEach((img) => {
-    console.log(img);
     promises.push(del(img));
   });
 
@@ -41,6 +39,8 @@ exports.deleteOne = (Model) => async (req, res, next) => {
     if (!doc) {
       return next(new AppError('No document found with that ID', 404));
     }
+
+    // deleteBlobWhenUpdate(req, Model);
 
     res.status(204).json({
       status: 'success',
@@ -62,7 +62,7 @@ exports.updateOne = (Model) => async (req, res, next) => {
       return next(new AppError('No document found with that ID', 404));
     }
 
-    deleteInBlobWhenUpdate(req, Model);
+    // deleteBlobWhenUpdate(req, Model);
     await uploadToBlob(req);
 
     res.status(200).json({
@@ -80,7 +80,9 @@ exports.createOne = (Model) => async (req, res, next) => {
   try {
     const doc = await Model.create(req.body);
 
-    req.body.author = res.status(201).json({
+    await uploadToBlob(req);
+
+    res.status(201).json({
       status: 'success',
       data: {
         data: doc,

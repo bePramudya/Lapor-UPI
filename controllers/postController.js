@@ -4,6 +4,7 @@ const sharp = require('sharp');
 const AppError = require('../utils/appError');
 const Post = require('../models/postModel');
 const factory = require('./handlerFactory');
+const authController = require('./authController');
 
 exports.setUserId = (req, res, next) => {
   req.body.author = req.user.id;
@@ -32,9 +33,17 @@ exports.formatPostImages = async (req, res, next) => {
     if (!req.files || req.files.length === 0) return next();
     const promises = [];
     req.body.images = [];
+    let filename;
+
+    const currentUser = await authController.getUserInfo(req, res, next);
 
     req.files.forEach((file, i) => {
-      const filename = `post-${req.params.id}-${Date.now()}-${i + 1}.jpeg`;
+      console.log(req.params.id);
+      if (req.params.id) {
+        filename = `post-${req.params.id}-${Date.now()}-${i + 1}.jpeg`;
+      } else {
+        filename = `post-${currentUser._id}-${Date.now()}-${i + 1}.jpeg`;
+      }
 
       promises.push(sharp(file.buffer).toFormat('jpeg').jpeg({ quality: 90 }));
 
