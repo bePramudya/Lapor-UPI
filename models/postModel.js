@@ -12,8 +12,8 @@ const postSchema = mongoose.Schema({
     type: String,
     required: [true, 'title undefined'],
     trim: true,
-    maxLength: [32, 'A tour name must have less or equal than 40 characters'],
-    minLength: [8, 'A tour name must have more or equal than 10 characters'],
+    maxLength: [32, 'A post name must have less or equal than 40 characters'],
+    minLength: [8, 'A post name must have more or equal than 10 characters'],
   },
   slug: String,
   description: {

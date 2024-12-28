@@ -1,5 +1,6 @@
 const multer = require('multer');
 const sharp = require('sharp');
+const fs = require('fs');
 
 const AppError = require('../utils/appError');
 const Post = require('../models/postModel');
@@ -29,9 +30,14 @@ exports.uploadPostImages = upload.array('images', 3);
 
 exports.formatPostImages = async (req, res, next) => {
   try {
-    if (!req.files) return next();
+    if (!req.files || req.files.length === 0) return next();
     let promises = [];
     req.body.images = [];
+
+    const post = await Post.findById(req.params.id);
+    const imagePath = post.images.map((img) => `public/img/posts/${img}`);
+
+    promises.push(imagePath.map((img) => fs.promises.rm(img, { force: true })));
 
     req.files.forEach((file, i) => {
       const filename = `tour-${req.params.id}-${Date.now()}-${i + 1}.jpeg`;

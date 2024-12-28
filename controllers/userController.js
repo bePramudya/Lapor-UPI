@@ -1,5 +1,7 @@
 const multer = require('multer');
 const sharp = require('sharp');
+const fs = require('fs');
+
 const User = require('../models/userModel');
 const AppError = require('../utils/appError');
 const factory = require('./handlerFactory');
@@ -33,7 +35,12 @@ exports.uploadUserPhoto = upload.single('photo');
 
 exports.resizeUserPhoto = async (req, res, next) => {
   try {
-    if (!req.file) return next();
+    if (!req.files || req.files.length === 0) return next();
+
+    const user = await User.findById(req.params.id);
+    if (user.photo !== 'default.jpg') {
+      fs.promises.rm(`public/img/users/${user.photo}`, { force: true });
+    }
 
     req.file.filename = `user-${req.user.id}-${Date.now()}.jpeg`;
 
