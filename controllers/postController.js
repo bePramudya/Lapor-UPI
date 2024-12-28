@@ -35,7 +35,7 @@ exports.formatPostImages = async (req, res, next) => {
     req.body.images = [];
 
     req.files.forEach((file, i) => {
-      const filename = `tour-${req.params.id}-${Date.now()}-${i + 1}.jpeg`;
+      const filename = `post-${req.params.id}-${Date.now()}-${i + 1}.jpeg`;
 
       promises.push(
         sharp(file.buffer)

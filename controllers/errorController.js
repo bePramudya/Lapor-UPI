@@ -46,6 +46,8 @@ const sendErrorProd = (err, req, res) => {
     res.status(err.statusCode).json({
       status: err.status,
       message: err.message,
+      error: err,
+      stack: err.stack,
     });
 
     // Programming or otehr unknown error: don't leak error details
