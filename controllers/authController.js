@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
 const AppError = require('../utils/appError');
 const sendEmail = require('../utils/email');
+const { Domain } = require('domain');
 
 const signToken = (id) =>
   jwt.sign({ id }, process.env.JWT_SECRET, {
