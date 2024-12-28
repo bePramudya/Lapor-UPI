@@ -60,9 +60,12 @@ exports.createPost = factory.createOne(Post);
 exports.updatePost = factory.updateOne(Post);
 exports.deletePost = factory.deleteOne(Post);
 
-exports.getAllTimeStats = async (req, res, next) => {
+exports.getMonthlyPosts = async (req, res, next) => {
   try {
-    const post = await Post.aggregate([
+    const year = +req.params.year;
+    const month = +req.params.month;
+
+    const allTime = await Post.aggregate([
       {
         $group: {
           _id: 'All Time Stats',
@@ -70,20 +73,6 @@ exports.getAllTimeStats = async (req, res, next) => {
         },
       },
     ]);
-
-    res.status(200).json({
-      status: 'success',
-      data: { post },
-    });
-  } catch (err) {
-    next(err);
-  }
-};
-
-exports.getMonthlyPosts = async (req, res, next) => {
-  try {
-    const year = +req.params.year;
-    const month = +req.params.month;
 
     const totalPost = await Post.aggregate([
       {
@@ -166,6 +155,7 @@ exports.getMonthlyPosts = async (req, res, next) => {
     res.status(200).json({
       status: 'success',
       data: {
+        allTime: allTime[0],
         totalPost: totalPost[0],
         postPerCategory: {
           sp: spStats[0],
