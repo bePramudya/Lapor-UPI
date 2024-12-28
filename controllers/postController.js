@@ -6,8 +6,9 @@ const Post = require('../models/postModel');
 const factory = require('./handlerFactory');
 const authController = require('./authController');
 
-exports.setUserId = (req, res, next) => {
+exports.setUserIdAndCreatedAt = (req, res, next) => {
   req.body.author = req.user.id;
+  req.body.createdAt = Date.now();
   next();
 };
 

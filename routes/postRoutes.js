@@ -15,7 +15,7 @@ router
     postController.uploadPostImages,
     postController.formatPostImages,
     authController.protect,
-    postController.setUserId,
+    postController.setUserIdAndCreatedAt,
     postController.createPost,
   );
 
