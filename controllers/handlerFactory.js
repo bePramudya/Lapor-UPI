@@ -1,5 +1,38 @@
+const { put, list, del } = require('@vercel/blob');
+
 const AppError = require('../utils/appError');
 const APIFeatures = require('../utils/apiFeatures');
+
+const uploadToBlob = async (req) => {
+  const promises = [];
+
+  req.files.forEach((file) => {
+    promises.push(
+      put(file.filename, file.buffer, {
+        access: 'public',
+        token: process.env.BLOB_READ_WRITE_TOKEN,
+        addRandomSuffix: false,
+      }).catch((error) => console.error('Error in put:', error)),
+    );
+  });
+
+  await Promise.all(promises);
+};
+
+const deleteInBlobWhenUpdate = async (req, Model) => {
+  const post = await Model.findById(req.params.id);
+  console.log(post.images);
+  if (post.images.length === 0) return;
+
+  const promises = [];
+
+  post.images.forEach((img) => {
+    console.log(img);
+    promises.push(del(img));
+  });
+
+  Promise.all(promises);
+};
 
 exports.deleteOne = (Model) => async (req, res, next) => {
   try {
@@ -29,6 +62,9 @@ exports.updateOne = (Model) => async (req, res, next) => {
       return next(new AppError('No document found with that ID', 404));
     }
 
+    deleteInBlobWhenUpdate(req, Model);
+    await uploadToBlob(req);
+
     res.status(200).json({
       status: 'success',
       data: {
@@ -44,7 +80,7 @@ exports.createOne = (Model) => async (req, res, next) => {
   try {
     const doc = await Model.create(req.body);
 
-    res.status(201).json({
+    req.body.author = res.status(201).json({
       status: 'success',
       data: {
         data: doc,

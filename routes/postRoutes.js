@@ -12,6 +12,8 @@ router
   .route('/')
   .get(postController.getAllPosts)
   .post(
+    postController.uploadPostImages,
+    postController.formatPostImages,
     authController.protect,
     postController.setUserId,
     postController.createPost,
@@ -21,10 +23,10 @@ router
   .route('/:id')
   .get(postController.getPost)
   .patch(
-    authController.protect,
-    authController.restrictTo('admin'),
     postController.uploadPostImages,
     postController.formatPostImages,
+    authController.protect,
+    authController.restrictTo('admin'),
     postController.updatePost,
   )
   .delete(

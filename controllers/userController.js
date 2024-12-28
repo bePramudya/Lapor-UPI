@@ -1,6 +1,5 @@
 const multer = require('multer');
 const sharp = require('sharp');
-const fs = require('fs');
 
 const User = require('../models/userModel');
 const AppError = require('../utils/appError');
