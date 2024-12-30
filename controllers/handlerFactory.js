@@ -1,4 +1,4 @@
-const { put, list, del } = require('@vercel/blob');
+const { put, del } = require('@vercel/blob');
 
 const AppError = require('../utils/appError');
 const APIFeatures = require('../utils/apiFeatures');

@@ -39,14 +39,21 @@ exports.formatPostImages = async (req, res, next) => {
     const currentUser = await authController.getUserInfo(req, res, next);
 
     req.files.forEach((file, i) => {
-      console.log(req.params.id);
       if (req.params.id) {
         filename = `post-${req.params.id}-${Date.now()}-${i + 1}.jpeg`;
       } else {
         filename = `post-${currentUser._id}-${Date.now()}-${i + 1}.jpeg`;
       }
 
-      promises.push(sharp(file.buffer).toFormat('jpeg').jpeg({ quality: 90 }));
+      promises.push(
+        sharp(file.buffer)
+          .toFormat('jpeg')
+          .jpeg({ quality: 90 })
+          .toBuffer()
+          .then((data) => {
+            file.buffer = data;
+          }),
+      );
 
       req.body.images.push(filename);
       file.filename = filename;
