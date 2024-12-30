@@ -7,6 +7,7 @@ const AppError = require('../utils/appError');
 const factory = require('./handlerFactory');
 
 const uploadToBlob = async (req) => {
+  if (!req.file) return;
   const promises = [];
 
   promises.push(

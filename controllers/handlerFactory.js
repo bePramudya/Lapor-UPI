@@ -4,6 +4,7 @@ const AppError = require('../utils/appError');
 const APIFeatures = require('../utils/apiFeatures');
 
 const uploadToBlob = async (req) => {
+  if (req.files) return;
   const promises = [];
 
   req.files.forEach((file) => {
