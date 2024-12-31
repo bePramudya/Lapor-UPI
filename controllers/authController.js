@@ -136,7 +136,7 @@ exports.protect = async (req, res, next) => {
   }
 };
 
-exports.getUserInfo = async (req, res, next) => {
+exports.getUserInfo = async (req, res, next, dataForRoute = false) => {
   try {
     // 1) Getting token and check if it's there
     let token;
@@ -172,6 +172,8 @@ exports.getUserInfo = async (req, res, next) => {
     if (currentUser.changedPasswordAfter(decoded.iat)) {
       return next();
     }
+
+    if (dataForRoute) return currentUser;
 
     res.status(200).json({
       status: 'success',

@@ -6,9 +6,35 @@ const router = express.Router();
 
 // router.param('id', tourController.checkID);
 
-router.route('/monthly-stats/:year&:month').get(postController.getMonthlyPosts);
+router.get('/monthly-stats/:year&:month', postController.getMonthlyPosts);
 
-router.route('/softDelete/:id').delete(postController.softDelete);
+router.delete(
+  '/softDelete/:id',
+  authController.protect,
+  authController.restrictTo('admin'),
+  postController.softDelete,
+);
+
+router
+  .route('/archive')
+  .get(
+    authController.protect,
+    authController.restrictTo('admin'),
+    postController.getArchive,
+  );
+
+router
+  .route('/archive/:id')
+  .patch(
+    authController.protect,
+    authController.restrictTo('admin'),
+    postController.restorePost,
+  )
+  .delete(
+    authController.protect,
+    authController.restrictTo('admin'),
+    postController.hardDeletePost,
+  );
 
 router
   .route('/')
@@ -30,11 +56,6 @@ router
     authController.protect,
     authController.restrictTo('admin'),
     postController.updatePost,
-  )
-  .delete(
-    authController.protect,
-    authController.restrictTo('admin'),
-    postController.hardDeletePost,
   );
 
 module.exports = router;

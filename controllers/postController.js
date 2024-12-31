@@ -5,6 +5,7 @@ const AppError = require('../utils/appError');
 const Post = require('../models/postModel');
 const factory = require('./handlerFactory');
 const authController = require('./authController');
+const APIFeatures = require('../utils/apiFeatures');
 
 exports.setUserIdAndCreatedAt = (req, res, next) => {
   req.body.author = req.user.id;
@@ -31,12 +32,13 @@ exports.uploadPostImages = upload.array('images', 3);
 
 exports.formatPostImages = async (req, res, next) => {
   try {
-    if (!req.files || req.files.length === 0) return next();
+    if (!req.files || req.files.length === 0) next();
+
     const promises = [];
     req.body.images = [];
     let filename;
 
-    const currentUser = await authController.getUserInfo(req, res, next);
+    const currentUser = await authController.getUserInfo(req, res, next, true);
 
     req.files.forEach((file, i) => {
       if (req.params.id) {
@@ -72,6 +74,61 @@ exports.getPost = factory.getOne(Post);
 exports.createPost = factory.createOne(Post);
 exports.updatePost = factory.updateOne(Post);
 exports.hardDeletePost = factory.deleteOne(Post);
+
+const filterArchive = (docs) => {
+  const filteredDocs = docs
+    .map((doc) => {
+      if (!doc.isDeleted) doc = undefined;
+      return doc;
+    })
+    .filter((el) => el !== undefined);
+
+  return filteredDocs;
+};
+
+exports.getArchive = async (req, res, next) => {
+  try {
+    const features = new APIFeatures(Post.find(), req.query)
+      .filter()
+      .sort()
+      .limitFields()
+      .paginate();
+    const docs = await features.query;
+
+    const archiveDocs = filterArchive(docs);
+
+    res.status(200).json({
+      status: 'success',
+      results: archiveDocs.length,
+      data: archiveDocs,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.restorePost = async (req, res, next) => {
+  try {
+    const doc = await Post.findByIdAndUpdate(
+      req.params.id,
+      { isDeleted: false },
+      {
+        new: true,
+      },
+    );
+
+    if (!doc) {
+      return next(new AppError('No document found with that ID', 404));
+    }
+
+    res.status(204).json({
+      status: 'success',
+      data: null,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
 
 exports.softDelete = async (req, res, next) => {
   try {
