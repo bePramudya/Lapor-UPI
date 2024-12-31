@@ -33,6 +33,18 @@ const deleteBlobWhenUpdate = async (req, Model) => {
   Promise.all(promises);
 };
 
+const filterPosts = (docs) => {
+  const filteredDocs = docs
+    .map((doc) => {
+      if (doc.anonim) doc.author = undefined;
+      if (doc.isDeleted) doc = undefined;
+      return doc;
+    })
+    .filter((el) => el !== undefined);
+
+  return filteredDocs;
+};
+
 exports.deleteOne = (Model) => async (req, res, next) => {
   try {
     const doc = await Model.findByIdAndDelete(req.params.id);
@@ -125,17 +137,15 @@ exports.getAll = (Model) => async (req, res, next) => {
       .sort()
       .limitFields()
       .paginate();
-    const doc = await features.query;
+    const docs = await features.query;
 
-    doc.forEach((post) => {
-      if (post.anonim) post.author = undefined;
-    });
+    const finishedDocs = await filterPosts(docs);
 
     res.status(200).json({
       status: 'success',
-      results: doc.length,
+      results: finishedDocs.length,
       data: {
-        data: doc,
+        data: finishedDocs,
       },
     });
   } catch (err) {

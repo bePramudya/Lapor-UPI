@@ -71,7 +71,30 @@ exports.getAllPosts = factory.getAll(Post);
 exports.getPost = factory.getOne(Post);
 exports.createPost = factory.createOne(Post);
 exports.updatePost = factory.updateOne(Post);
-exports.deletePost = factory.deleteOne(Post);
+exports.hardDeletePost = factory.deleteOne(Post);
+
+exports.softDelete = async (req, res, next) => {
+  try {
+    const doc = await Post.findByIdAndUpdate(
+      req.params.id,
+      { isDeleted: true },
+      {
+        new: true,
+      },
+    );
+
+    if (!doc) {
+      return next(new AppError('No document found with that ID', 404));
+    }
+
+    res.status(204).json({
+      status: 'success',
+      data: null,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
 
 exports.getMonthlyPosts = async (req, res, next) => {
   try {

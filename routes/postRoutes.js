@@ -8,6 +8,8 @@ const router = express.Router();
 
 router.route('/monthly-stats/:year&:month').get(postController.getMonthlyPosts);
 
+router.route('/softDelete/:id').delete(postController.softDelete);
+
 router
   .route('/')
   .get(postController.getAllPosts)
@@ -32,7 +34,7 @@ router
   .delete(
     authController.protect,
     authController.restrictTo('admin'),
-    postController.deletePost,
+    postController.hardDeletePost,
   );
 
 module.exports = router;

@@ -74,6 +74,15 @@ userSchema.pre('save', function (next) {
   next();
 });
 
+// userSchema.pre(/^find/, function (next) {
+//   this.populate({
+//     path: 'author',
+//     select: 'name photo',
+//   });
+
+//   next();
+// });
+
 userSchema.methods.correctPassword = async function (
   candidatePassword,
   userPassword,
