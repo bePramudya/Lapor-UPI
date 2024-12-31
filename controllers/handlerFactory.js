@@ -104,6 +104,8 @@ exports.getOne = (Model, populateOptions) => async (req, res, next) => {
       return next(new AppError('No document found with that ID', 404));
     }
 
+    if (doc.anonim) doc.author = undefined;
+
     res.status(200).json({
       status: 'success',
       data: {
@@ -124,6 +126,10 @@ exports.getAll = (Model) => async (req, res, next) => {
       .limitFields()
       .paginate();
     const doc = await features.query;
+
+    doc.forEach((post) => {
+      if (post.anonim) post.author = undefined;
+    });
 
     res.status(200).json({
       status: 'success',

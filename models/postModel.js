@@ -54,6 +54,8 @@ postSchema.pre('save', function (next) {
   next();
 });
 
+// QUERY MIDDLEWARE
+
 postSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'author',
