@@ -24,20 +24,10 @@ app.set('views', path.join(__dirname, 'views'));
 // 1) GLOBAL MIDDLEWARES
 
 // CORS
-const whitelist = ['https://laporupi.bepramudya.com', 'http://127.0.0.1:3000'];
 
-const corsOptions = {
-  credentials: true,
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-};
-
-app.use(cors(corsOptions));
+app.use(
+  cors({ credentials: true, origin: 'https://laporupi.bepramudya.com/' }),
+);
 app.options('*', cors());
 
 // Serving static files
