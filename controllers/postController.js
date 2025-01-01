@@ -32,7 +32,7 @@ exports.uploadPostImages = upload.array('images', 3);
 
 exports.formatPostImages = async (req, res, next) => {
   try {
-    if (!req.files || req.files.length === 0) next();
+    if (!req.files || req.files.length === 0) return next();
 
     const promises = [];
     req.body.images = [];
