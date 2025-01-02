@@ -174,6 +174,7 @@ exports.getMonthlyPosts = async (req, res, next) => {
             $gte: new Date(`${year}-${month}-01`),
             $lte: new Date(`${year}-${month}-31`),
           },
+          isDeleted: { $eq: false },
         },
       },
       {

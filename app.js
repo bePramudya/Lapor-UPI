@@ -26,6 +26,8 @@ app.set('views', path.join(__dirname, 'views'));
 // CORS
 
 app.use(cors({ credentials: true, origin: 'https://laporupi.bepramudya.com' }));
+// app.use(cors({ credentials: true, origin: 'http://127.0.0.1:3000' }));
+
 app.options('*', cors());
 
 // Serving static files
