@@ -160,6 +160,11 @@ exports.getMonthlyPosts = async (req, res, next) => {
 
     const allTime = await Post.aggregate([
       {
+        $match: {
+          isDeleted: { $eq: false },
+        },
+      },
+      {
         $group: {
           _id: 'All Time Stats',
           totalPosts: { $sum: 1 },
@@ -190,6 +195,7 @@ exports.getMonthlyPosts = async (req, res, next) => {
       {
         $match: {
           category: { $eq: 'sp' },
+          isDeleted: { $eq: false },
         },
       },
       {
@@ -205,6 +211,7 @@ exports.getMonthlyPosts = async (req, res, next) => {
       {
         $match: {
           category: { $eq: 'ks' },
+          isDeleted: { $eq: false },
         },
       },
       {
@@ -220,6 +227,7 @@ exports.getMonthlyPosts = async (req, res, next) => {
       {
         $match: {
           category: { $eq: 'env' },
+          isDeleted: { $eq: false },
         },
       },
       {
@@ -235,6 +243,7 @@ exports.getMonthlyPosts = async (req, res, next) => {
       {
         $match: {
           category: { $eq: 'other' },
+          isDeleted: { $eq: false },
         },
       },
       {
