@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const slugify = require('slugify');
 
 const postSchema = mongoose.Schema({
@@ -55,7 +54,6 @@ postSchema.pre('save', function (next) {
 });
 
 // QUERY MIDDLEWARE
-
 postSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'author',

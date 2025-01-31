@@ -1,0 +1,228 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Ubuntu:wght@700&display=swap');
+
+:root {
+  --white: #f7f8f9;
+  --gray: #dbdbdb;
+  --dark: #2b2b2b;
+  --darker: #141414;
+  --red-upi: rgb(255, 000, 000);
+  --blue: #1a73e8;
+
+  --ff-logo: 'Ubuntu', sans-serif;
+  --ff-text: 'Open Sans', sans-serif;
+
+  --fs-xl: 2rem;
+  --fs-600: 1.5rem;
+  --fs-500: 1.125rem;
+  --fs-400: 0.875rem;
+
+  --is-400: 1.5rem;
+
+  --img-xl: 5rem;
+  --img-500: 2rem;
+  --img-400: 1.75rem;
+
+  --layout-padding: 3.75rem;
+}
+
+* {
+  box-sizing: border-box;
+  text-decoration: none;
+  margin: 0;
+  font-family: var(--ff-text);
+}
+
+body {
+  background: var(--white);
+  color: var(--dark);
+}
+
+a {
+  color: var(--dark);
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+
+  max-inline-size: 90rem;
+  padding-inline: var(--layout-padding);
+  margin: 0 auto;
+  font-size: var(--fs-500);
+
+  .logo {
+    font-family: var(--ff-logo);
+    font-size: var(--fs-xl);
+    font-weight: 700;
+
+    span {
+      color: var(--red-upi);
+    }
+  }
+
+  .top__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    block-size: 5.5rem;
+  }
+
+  .container__navbar {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .container__profile {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .profile-photo {
+    max-inline-size: var(--img-500);
+    max-block-size: var(--img-500);
+    border-radius: 50%;
+  }
+
+  .icon__dropdown {
+    fill: var(--dark);
+    inline-size: var(--is-400);
+    block-size: var(--is-400);
+  }
+
+  .container__search {
+    display: flex;
+    gap: 16px;
+    justify-content: space-between;
+    align-items: center;
+    block-size: 4rem;
+  }
+
+  .input__search {
+    font-family: var(--ff-text);
+
+    flex: 1;
+    block-size: 3.5rem;
+    padding-inline: 1rem;
+    border-radius: 0.5rem;
+    border: var(--dark) 2px solid;
+    font-size: var(--fs-500);
+  }
+
+  .btn__create-report {
+    border: none;
+    color: var(--white);
+    background: var(--dark);
+
+    inline-size: 12.5rem;
+    block-size: 3.5rem;
+    border-radius: 0.5rem;
+    font-size: var(--fs-500);
+    font-weight: 600;
+  }
+
+  .container__filters-sort {
+    display: flex;
+    align-items: center;
+    block-size: 4rem;
+    gap: 1rem;
+  }
+
+  .sort-filter-btn {
+    block-size: 2.5rem;
+    border-radius: 0.5rem;
+    padding-inline: 1rem;
+    font-size: var(--fs-500);
+  }
+
+  .sort-btn {
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--white);
+  }
+
+  .filter-btn {
+    background: none;
+    color: var(--dark);
+    border: var(--dark) 2px solid;
+  }
+
+  .active {
+    font-weight: 600;
+    background: var(--dark);
+  }
+}
+
+button:hover {
+  /* background: var(--darker); */
+  cursor: pointer;
+}
+
+.container__content {
+  display: flex;
+  flex-direction: column;
+  max-inline-size: 90rem;
+
+  padding-inline: var(--layout-padding);
+  margin: 0 auto;
+  font-size: var(--fs-500);
+
+  .doc-found-count {
+    font-size: var(--fs-400);
+    block-size: 2.25rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .report-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-block: 0.5rem;
+  }
+
+  .card__report {
+    display: flex;
+
+    justify-content: space-between;
+    background-color: var(--gray);
+
+    block-size: 8rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: none;
+    gap: 1.5rem;
+  }
+
+  .left-side__card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    block-size: 100%;
+  }
+
+  .report-title {
+    font-size: var(--fs-600);
+  }
+
+  .report-tag {
+    inline-size: fit-content;
+    background-color: var(--dark);
+    color: var(--white);
+    border: none;
+
+    padding: 0.125rem 0.5rem;
+    border-radius: 50px;
+    font-size: var(--fs-400);
+  }
+
+  .preview-image {
+    border: none;
+    border-radius: 0.5rem;
+  }
+}
+
+/* min-width: 1024px */

@@ -14,23 +14,21 @@ const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 const postRouter = require('./routes/postRoutes');
 const userRouter = require('./routes/userRoutes');
+const viewRouter = require('./routes/viewRoutes');
 
 // Start express app
 const app = express();
 
-app.set('view engine', 'pug');
+app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 // 1) GLOBAL MIDDLEWARES
-
 // CORS
-
 app.use(cors({ credentials: true, origin: 'https://laporupi.bepramudya.com' }));
 // app.use(cors({ credentials: true, origin: 'http://127.0.0.1:3000' }));
-
 app.options('*', cors());
 
-// Serving static files
+// serving static files
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Set Security HTTP headers
@@ -64,7 +62,6 @@ app.use(xss());
 
 // Prevent parameter pollution
 app.use(hpp({ whitelist: ['category'] }));
-
 app.use(compression());
 
 // Test middleware
@@ -74,15 +71,18 @@ app.use((req, res, next) => {
 });
 
 // 2) ROUTES
-// http.createServer(app).listen(5000);
+
+// app.get('/', (req, res) => {
+//   res.status(200).render('base');
+// });
 
 app.use('/api/v1/posts', postRouter);
 app.use('/api/v1/users', userRouter);
+app.use('/', viewRouter);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
 });
-
 app.use(globalErrorHandler);
 
 // START SERVER
