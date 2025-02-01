@@ -85,15 +85,9 @@ header {
     border-radius: 50%;
   }
 
-  .icon__dropdown {
-    fill: var(--dark);
-    inline-size: var(--is-400);
-    block-size: var(--is-400);
-  }
-
   .container__search {
     display: flex;
-    gap: 16px;
+    gap: 1rem;
     justify-content: space-between;
     align-items: center;
     block-size: 4rem;
@@ -110,7 +104,9 @@ header {
     font-size: var(--fs-500);
   }
 
-  .btn__create-report {
+  .btn-main {
+    display: flex;
+    justify-content: center;
     border: none;
     color: var(--white);
     background: var(--dark);
@@ -122,6 +118,15 @@ header {
     font-weight: 600;
   }
 
+  .btn__create-report {
+    inline-size: 12.5rem;
+  }
+
+  .btn__cancel-report {
+    inline-size: 6.25rem;
+    background: var(--red-upi);
+  }
+
   .container__filters-sort {
     display: flex;
     align-items: center;
@@ -129,30 +134,78 @@ header {
     gap: 1rem;
   }
 
-  .sort-filter-btn {
+  .filter-btn {
+    background: none;
+    color: var(--dark);
+
     block-size: 2.5rem;
     border-radius: 0.5rem;
     padding-inline: 1rem;
     font-size: var(--fs-500);
+    border: var(--dark) 2px solid;
   }
 
-  .sort-btn {
-    border: none;
+  .centering-btn {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    color: var(--white);
   }
 
-  .filter-btn {
-    background: none;
-    color: var(--dark);
-    border: var(--dark) 2px solid;
+  .icon {
+    fill: var(--dark);
+    inline-size: var(--is-400);
+    block-size: var(--is-400);
+  }
+
+  .icon-white {
+    fill: var(--white);
   }
 
   .active {
     font-weight: 600;
     background: var(--dark);
+  }
+
+  .container__report-details {
+    display: flex;
+    align-items: center;
+    block-size: 20rem;
+  }
+
+  .form__report-details {
+    display: flex;
+    flex-direction: column;
+    border: var(--dark) 2px solid;
+    border-radius: 0.5rem;
+    gap: 1rem;
+    padding: 1rem;
+    block-size: 19.5rem;
+    flex: 1;
+  }
+
+  .input__details {
+    flex: 1;
+    padding: 0.5rem;
+    font-size: var(--fs-500);
+
+    resize: none;
+    background: none;
+    border: none;
+    border-radius: 0.5rem;
+  }
+
+  .btns-input-report-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    block-size: fit-content;
+    block-size: 3.5rem;
+  }
+
+  .left-side__report-input {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
   }
 }
 
@@ -197,7 +250,7 @@ button:hover {
     gap: 1.5rem;
   }
 
-  .left-side__card {
+  .left-side {
     display: flex;
     flex-direction: column;
     justify-content: space-between;

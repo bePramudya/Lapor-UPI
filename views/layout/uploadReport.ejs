@@ -1,0 +1,68 @@
+<section class="container__search">
+  <input
+    type="search"
+    class="input__search"
+    placeholder="Cantumkan judul laporan"
+  />
+
+  <button class="btn__cancel-report btn-main centering-btn">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="icon icon-white"
+      viewBox="0 -960 960 960"
+    >
+      <path
+        d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"
+      />
+    </svg>
+    Batal
+  </button>
+</section>
+
+<section class="container__report-details">
+  <form class="form__report-details">
+    <textarea
+      class="input__details"
+      type="text"
+      placeholder="Lengkapi detail laporan"
+    ></textarea>
+    <div class="btns-input-report-details">
+      <div class="left-side__report-input">
+        <button class="sort-filter-btn centering-btn">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 -960 960 960"
+            class="icon"
+          >
+            <path
+              d="M480-480ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h320v80H200v560h560v-320h80v320q0 33-23.5 56.5T760-120H200Zm40-160h480L570-480 450-320l-90-120-120 160Zm440-320v-80h-80v-80h80v-80h80v80h80v80h-80v80h-80Z"
+            /></svg
+          >Tambah foto/gambar
+        </button>
+        <select class="sort-filter-btn">
+          <option>Pilih Kategori</option>
+          <option>Sarana & Prasarana</option>
+          <option>Lingkungan</option>
+          <option>Kekerasan Seksual</option>
+          <option>Lainnya</option>
+        </select>
+        <div class="input-anonim">
+          <input type="checkbox" value="anonim" />
+          <label>Kirim sebagai anonim</label>
+        </div>
+      </div>
+      <button class="btn-main centering-btn">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="icon icon-white"
+          viewBox="0 -960 960 960"
+        >
+          <path
+            d="M440-320v-326L336-542l-56-58 200-200 200 200-56 58-104-104v326h-80ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"
+          />
+        </svg>
+        Unggah
+      </button>
+    </div>
+  </form>
+</section>
