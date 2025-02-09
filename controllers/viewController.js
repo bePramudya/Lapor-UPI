@@ -4,7 +4,7 @@
 
 exports.test = async (req, res, next) => {
   try {
-    res.status(200).render('base', { title: 'Reports' });
+    res.status(200).render('reports', { title: 'Reports' });
   } catch (err) {
     next(err);
   }

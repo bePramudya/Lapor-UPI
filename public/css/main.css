@@ -1,0 +1,195 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Ubuntu:wght@700&display=swap');
+
+:root {
+  --white: #f7f8f9;
+  --gray: #dfdfdf;
+  --dark: #2b2b2b;
+  --darker: #141414;
+  --red-upi: rgb(255, 000, 000);
+  --blue: #1a73e8;
+
+  --ff-logo: 'Ubuntu', sans-serif;
+  --ff-text: 'Open Sans', sans-serif;
+
+  --fs-xl: 2rem;
+  --fs-600: 1.5rem;
+  --fs-500: 1.125rem;
+  --fs-400: 0.875rem;
+
+  --icon-400: 1.5rem;
+
+  --img-xl: 5rem;
+  --img-500: 2rem;
+  --img-400: 1.75rem;
+
+  --layout-padding: 3.75rem;
+}
+
+* {
+  box-sizing: border-box;
+  text-decoration: none;
+  margin: 0;
+  font-family: var(--ff-text);
+  color: var(--dark);
+}
+
+body {
+  background: var(--white);
+}
+
+.wrapper {
+  max-inline-size: 90rem;
+  padding-inline: var(--layout-padding);
+  margin: 0 auto;
+}
+
+.icon {
+  fill: var(--dark);
+  inline-size: var(--icon-400);
+  block-size: var(--icon-400);
+}
+
+.icon-white {
+  fill: var(--white);
+}
+
+.content-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.round-border--main {
+  border-radius: 0.5rem;
+  border: none;
+}
+
+.border {
+  border: 0.125rem solid var(--dark);
+}
+
+.main-btn {
+  background-color: var(--dark);
+  color: var(--white);
+  padding: 0.5rem 1rem;
+}
+
+span {
+  color: inherit;
+}
+
+button,
+a,
+.wrapper-profile {
+  cursor: pointer;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  block-size: 4.5rem;
+
+  .logo {
+    font-family: var(--ff-logo);
+    font-size: var(--fs-xl);
+    font-weight: 700;
+
+    span {
+      color: var(--red-upi);
+    }
+  }
+
+  .navbar {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .wrapper-profile {
+    padding: 0.5rem 0;
+  }
+
+  .profile-photo {
+    inline-size: 2rem;
+    block-size: 2rem;
+    border-radius: 50%;
+  }
+
+  .username {
+    font-weight: 700;
+  }
+
+  .content-dropdown {
+    display: none;
+    background-color: var(--white);
+    position: absolute;
+    overflow: hidden;
+
+    inset-inline-end: 0;
+    border-radius: 0.5rem;
+    min-inline-size: 10rem;
+    z-index: 1;
+  }
+
+  .drop-btn {
+    padding-block: 1rem;
+  }
+
+  .dropdown:hover,
+  .dropdown:focus {
+    position: relative;
+    display: inline-block;
+
+    .content-dropdown {
+      display: block;
+    }
+  }
+
+  .drop-btn:hover,
+  .drop-btn:focus {
+    background-color: var(--gray);
+  }
+}
+
+.search-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  block-size: 4rem;
+
+  .search-input {
+    flex: 1;
+    block-size: 3.5rem;
+    padding-inline: 0.75rem;
+    font-size: var(--fs-500);
+  }
+
+  .create-report--btn {
+    block-size: 3.5rem;
+    font-size: var(--fs-400);
+  }
+}
+
+.filter-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  block-size: 2.5rem;
+
+  .filter-btn {
+    block-size: 2rem;
+    border: 0.125rem solid var(--dark);
+    border-radius: 0.4rem;
+    padding-inline: 01rem;
+    background-color: var(--white);
+    font-size: var(--fs-400);
+  }
+
+  .filter-btn:focus,
+  .filter-btn:hover {
+    background-color: var(--gray);
+  }
+}
