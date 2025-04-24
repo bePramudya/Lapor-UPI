@@ -6,6 +6,9 @@
   "engines": {
     "node": "^22"
   },
+  "nodemonConfig": {
+    "ext": "js, json, ejs"
+  },
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
